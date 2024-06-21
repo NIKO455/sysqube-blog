@@ -22,7 +22,7 @@ managing blog posts related to technology.
         - Description
         - Status (Published or Draft)
         - Blog Image upload
-- **Password:**
+- **Login Credentials:**
     - Name: Admin
     - Email: admin@gmail.com
     - Password: admin
