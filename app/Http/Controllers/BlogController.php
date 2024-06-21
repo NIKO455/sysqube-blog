@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
@@ -17,7 +18,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::where('user_id', auth()->user()->id)->get();
+        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('category')->paginate(10));
         return Inertia::render('Blog/Index', compact('blogs'));
     }
 
@@ -46,7 +47,7 @@ class BlogController extends Controller
                 $imagePath = $image->storeAs('blog_images', $imageName, 'public');
             }
 
-            $blog = Blog::create([
+            Blog::create([
                 'title' => $data['title'],
                 'slug' => $slug,
                 'description' => $data['description'],
