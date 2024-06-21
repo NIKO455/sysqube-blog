@@ -54,11 +54,12 @@ composer install
 npm install
 ```
 
+
+# Edit .env,  set your database connection details and other configuration
+
 ```bash
 cp .env.example .env
 ```
-
-# Edit .env and set your database connection details
 
 ```bash
 php artisan key:generate
@@ -68,7 +69,9 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-#### Frontend (React)
+```bash
+php artisan storage:link
+```
 
 
 ### Running the application
@@ -82,7 +85,7 @@ php artisan serve
 #### Frontend (React)
 
 ```bash
-npm start
+npm run dev
 ```
 
 Visit `http://127.0.0.1:8000` in your browser to see the SysǪube Blog application.
