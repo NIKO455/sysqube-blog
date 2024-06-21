@@ -88,7 +88,7 @@ export default function Index({auth, blogs}) {
                                                 <td className="px-6 py-4">
                                                     {blog.category}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-6 py-4 truncate-3-lines">
                                                     {blog.description}
                                                 </td>
                                                 <td className="px-6 py-4 capitalize">

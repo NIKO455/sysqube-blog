@@ -8,6 +8,7 @@ use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Category;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use function PHPUnit\Framework\isEmpty;
 
@@ -95,19 +96,54 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($slug)
+    public function edit($slug): \Inertia\Response
     {
         $blog = Blog::where('slug', $slug)->first();
-        return Inertia::render('Blog/Edit', compact('blog'));
+        $blog->image = '/storage/' . $blog->image;
+        $categories = Category::all();
+        return Inertia::render('Blog/Edit', compact('blog', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBlogRequest $request, $slug)
+    public function update(UpdateBlogRequest $request, $slug): \Illuminate\Http\RedirectResponse
     {
-        dd($request->all());
+        try {
+            $blog = Blog::where('slug', $slug)->first();
+            $data = $request->validated();
+
+            if($data['slug']){
+                $data['slug'] = $this->generateUniqueSlug($data['slug']);
+            }
+
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+                    Storage::disk('public')->delete($blog->image);
+                }
+
+                $image = $request->file('image');
+                $imageName = uniqid() . '_' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('blog_images', $imageName, 'public');
+            }
+
+            $blog->update([
+                'title' => $data['title'],
+                'slug' => $slug,
+                'description' => $data['description'],
+                'image' => $imagePath,
+                'category_id' => $data['category_id'],
+            ]);
+
+            return redirect()->route('blog')->with('message', 'Blog updated successfully!');
+
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->route('blog')->with('message', 'Blog failed to update!');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -116,6 +152,9 @@ class BlogController extends Controller
     {
         try {
             $blog = Blog::where('slug', $slug)->first();
+            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+                Storage::disk('public')->delete($blog->image);
+            }
             $blog->delete();
             return to_route('blog')->with('message', 'Blog deleted successfully');
         } catch (Exception $e) {

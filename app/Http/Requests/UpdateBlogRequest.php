@@ -22,7 +22,11 @@ class UpdateBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['nullable', 'string', 'max:255'],
+            'slug' => ['nullable', 'string'],
+            'image' => ['nullable', 'image'],
+            'description' => ['nullable'],
+            'category_id' => ['nullable', 'exists:App\Models\Category,id'],
         ];
     }
 }
