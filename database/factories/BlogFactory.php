@@ -17,7 +17,13 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->title(),
+            'slug' => fake()->slug(),
+            'description' => fake()->sentence(),
+            'image' => 'blog_images/667562d5e1280_shampoo.jpg',
+            'user_id' => 1,
+            'status' => 'published',
+            'category_id' => rand(1, 5),
         ];
     }
 }

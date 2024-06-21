@@ -3,6 +3,22 @@ import {Head, Link, useForm} from '@inertiajs/react';
 
 export default function Index({auth, blogs}) {
 
+    const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || '1');
+
+    // Extract page numbers from blogs.links dynamically
+    const pages = [];
+    for (let key in blogs.links) {
+        if (blogs.links[key] && blogs.links[key].includes('page=')) {
+            const pageNum = parseInt(new URL(blogs.links[key]).searchParams.get('page'));
+            if (!isNaN(pageNum) && !pages.includes(pageNum)) {
+                pages.push(pageNum);
+            }
+        }
+    }
+    pages.sort((a, b) => a - b); // Sort pages in ascending order
+
+    console.log(blogs.links)
+
     const {post, get} = useForm({});
 
     function deleteBlog(slug) {
@@ -76,7 +92,7 @@ export default function Index({auth, blogs}) {
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <th scope="row"
                                                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {index + 1}
+                                                    { (currentPage - 1) * 10 + index + 1 }
                                                 </th>
                                                 <td className="px-6 py-4">
                                                     {blog.title}
@@ -129,7 +145,52 @@ export default function Index({auth, blogs}) {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className='mt-5 flex items-center justify-center'>
+                                <div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul className="inline-flex -space-x-px text-sm">
+                                            {blogs.links.prev && (
+                                                <li>
+                                                    <a
+                                                        href={blogs.links.prev}
+                                                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                                    >
+                                                        Previous
+                                                    </a>
+                                                </li>
+                                            )}
 
+                                            {pages.map((page) => (
+                                                <li key={page}>
+                                                    <a
+                                                        href={`http://127.0.0.1:8000/blog?page=${page}`}
+                                                        className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                                                            currentPage === page
+                                                                ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
+                                                                : ''
+                                                        }`}
+                                                        aria-current={currentPage === page ? 'page' : undefined}
+                                                    >
+                                                        {page}
+                                                    </a>
+                                                </li>
+                                            ))}
+
+                                            {blogs.links.next && (
+                                                <li>
+                                                    <a
+                                                        href={blogs.links.next}
+                                                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                                    >
+                                                        Next
+                                                    </a>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

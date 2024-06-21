@@ -139,7 +139,6 @@ class BlogController extends Controller
             return redirect()->route('blog')->with('message', 'Blog updated successfully!');
 
         } catch (\Exception $e) {
-            dd($e);
             return redirect()->route('blog')->with('message', 'Blog failed to update!');
         }
     }
@@ -156,9 +155,9 @@ class BlogController extends Controller
                 Storage::disk('public')->delete($blog->image);
             }
             $blog->delete();
-            return to_route('blog')->with('message', 'Blog deleted successfully');
+            return to_route('blog')->with('message', 'Blog deleted successfully!');
         } catch (Exception $e) {
-            return to_route('blog')->with('message', 'Blog not deleted successfully');
+            return to_route('blog')->with('message', 'Blog not deleted successfully!');
         }
     }
 
@@ -172,9 +171,9 @@ class BlogController extends Controller
                 $blog->status = 'draft';
             }
             $blog->save();
-            return to_route('blog')->with('message', 'Blog status changed successfully');
+            return to_route('blog')->with('message', 'Blog status changed successfully!');
         } catch (Exception $e) {
-            return to_route('blog')->with('message', 'Blog status not changed successfully');
+            return to_route('blog')->with('message', 'Blog status not changed successfully!');
         }
     }
 }
