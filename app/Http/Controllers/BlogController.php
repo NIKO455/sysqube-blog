@@ -17,9 +17,9 @@ class BlogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): \Inertia\Response
     {
-        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('category')->with('user')->paginate(10));
+        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('category')->with('user')->latest()->paginate(10));
         return Inertia::render('Blog/Index', compact('blogs'));
     }
 
@@ -147,7 +147,7 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($slug)
+    public function destroy($slug): \Illuminate\Http\RedirectResponse
     {
         try {
             $blog = Blog::where('slug', $slug)->first();
@@ -161,7 +161,7 @@ class BlogController extends Controller
         }
     }
 
-    public function changeStaus($slug)
+    public function changeStatus($slug): \Illuminate\Http\RedirectResponse
     {
         try {
             $blog = Blog::where('slug', $slug)->first();

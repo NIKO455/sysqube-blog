@@ -91,20 +91,20 @@ export default function Index({auth, blogs}) {
                                             <tr key={blog.id}
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                 <th scope="row"
-                                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    { (currentPage - 1) * 10 + index + 1 }
+                                                    className="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                                    {(currentPage - 1) * 10 + index + 1}
                                                 </th>
-                                                <td className="px-6 py-4">
+                                                <td className="px-6 py-4 back-end-title box">
                                                     {blog.title}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-6 py-4  h-48 w-48 ">
                                                     <img src={blog.image} alt="no-image"
                                                          className='h-28 w-28 rounded object-cover'/>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {blog.category}
                                                 </td>
-                                                <td className="px-6 py-4 truncate-3-lines">
+                                                <td className="px-6 py-4 back-end-description">
                                                     {blog.description}
                                                 </td>
                                                 <td className="px-6 py-4 capitalize">
@@ -117,9 +117,9 @@ export default function Index({auth, blogs}) {
                                                     }
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <div className="flex justify-between items-center">
+                                                    <div className="flex justify-between gap-3">
                                                         <a onClick={() => editBlog(blog.slug)}
-                                                           className="flex items-center text-blue-600 hover:text-blue-800 cursor-pointer">
+                                                           className="flex text-blue-600 hover:text-blue-800 cursor-pointer">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                  viewBox="0 0 24 24" strokeWidth="1.5"
                                                                  stroke="currentColor" className="w-6 h-6">
@@ -128,7 +128,7 @@ export default function Index({auth, blogs}) {
                                                             </svg>
                                                         </a>
                                                         <a onClick={() => deleteBlog(blog.slug)}
-                                                           className="flex items-center text-red-600 hover:text-red-800 cursor-pointer">
+                                                           className="flex text-red-600 hover:text-red-800 cursor-pointer">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                                  viewBox="0 0 24 24" strokeWidth="1.5"
                                                                  stroke="currentColor" className="w-6 h-6">
@@ -147,47 +147,51 @@ export default function Index({auth, blogs}) {
                             </div>
                             <div className='mt-5 flex items-center justify-center'>
                                 <div>
-                                    <nav aria-label="Page navigation example">
-                                        <ul className="inline-flex -space-x-px text-sm">
-                                            {blogs.links.prev && (
-                                                <li>
-                                                    <a
-                                                        href={blogs.links.prev}
-                                                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                                    >
-                                                        Previous
-                                                    </a>
-                                                </li>
-                                            )}
+                                    {
+                                        blogs.links  ?
+                                            <nav aria-label="Page navigation example">
+                                                <ul className="inline-flex -space-x-px text-sm">
+                                                    {blogs.links.prev && (
+                                                        <li>
+                                                            <a
+                                                                href={blogs.links.prev}
+                                                                className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                                            >
+                                                                Previous
+                                                            </a>
+                                                        </li>
+                                                    )}
 
-                                            {pages.map((page) => (
-                                                <li key={page}>
-                                                    <a
-                                                        href={`http://127.0.0.1:8000/blog?page=${page}`}
-                                                        className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                                                            currentPage === page
-                                                                ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
-                                                                : ''
-                                                        }`}
-                                                        aria-current={currentPage === page ? 'page' : undefined}
-                                                    >
-                                                        {page}
-                                                    </a>
-                                                </li>
-                                            ))}
+                                                    {pages.map((page) => (
+                                                        <li key={page}>
+                                                            <a
+                                                                href={`http://127.0.0.1:8000/blog?page=${page}`}
+                                                                className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                                                                    currentPage === page
+                                                                        ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white'
+                                                                        : ''
+                                                                }`}
+                                                                aria-current={currentPage === page ? 'page' : undefined}
+                                                            >
+                                                                {page}
+                                                            </a>
+                                                        </li>
+                                                    ))}
 
-                                            {blogs.links.next && (
-                                                <li>
-                                                    <a
-                                                        href={blogs.links.next}
-                                                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                                    >
-                                                        Next
-                                                    </a>
-                                                </li>
-                                            )}
-                                        </ul>
-                                    </nav>
+                                                    {blogs.links.next && (
+                                                        <li>
+                                                            <a
+                                                                href={blogs.links.next}
+                                                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                                            >
+                                                                Next
+                                                            </a>
+                                                        </li>
+                                                    )}
+                                                </ul>
+                                            </nav> : ''
+                                    }
+
                                 </div>
 
                             </div>

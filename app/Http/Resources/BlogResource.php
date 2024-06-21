@@ -23,7 +23,7 @@ class BlogResource extends JsonResource
             "description" => $this->description,
             "category" => $this->category->name,
             "author" => $this->user->name,
-            "published" => $this->created_at
+            "published" => $this->created_at->diffForHumans(),
         ];
     }
 }
