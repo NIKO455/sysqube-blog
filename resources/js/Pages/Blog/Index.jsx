@@ -6,11 +6,17 @@ export default function Index({auth, blogs}) {
     const {post, get} = useForm({});
 
     function deleteBlog(slug) {
-        post(`/blog/delete/${slug}`);
+        if (window.confirm(`Are you sure you want to delete the blog post ?`)) {
+            post(`/blog/delete/${slug}`);
+        }
     }
 
     function editBlog(slug) {
         get(`/blog/edit/${slug}`);
+    }
+
+    function changeStaus(slug) {
+        post(`/blog/change-status/${slug}`);
     }
 
     return (
@@ -56,6 +62,9 @@ export default function Index({auth, blogs}) {
                                             Description
                                         </th>
                                         <th scope="col" className="px-6 py-3">
+                                            Status
+                                        </th>
+                                        <th scope="col" className="px-6 py-3">
                                             Action
                                         </th>
                                     </tr>
@@ -73,7 +82,7 @@ export default function Index({auth, blogs}) {
                                                     {blog.title}
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <img src={blog.image} alt="blog-image"
+                                                    <img src={blog.image} alt="no-image"
                                                          className='h-28 w-28 rounded object-cover'/>
                                                 </td>
                                                 <td className="px-6 py-4">
@@ -81,6 +90,15 @@ export default function Index({auth, blogs}) {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {blog.description}
+                                                </td>
+                                                <td className="px-6 py-4 capitalize">
+                                                    {
+                                                        blog.status === 'draft' ?
+                                                            <span onClick={() => changeStaus(blog.slug)}
+                                                                  className='bg-red-400 py-1 px-2 rounded cursor-pointer text-red-600'>Draft</span> :
+                                                            <span onClick={() => changeStaus(blog.slug)}
+                                                                  className='bg-green-400 py-1 px-2 rounded cursor-pointer  text-green-600'>Published</span>
+                                                    }
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="flex justify-between items-center">

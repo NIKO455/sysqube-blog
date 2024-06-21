@@ -18,7 +18,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('category')->paginate(10));
+        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('category')->with('user')->paginate(10));
         return Inertia::render('Blog/Index', compact('blogs'));
     }
 
@@ -46,6 +46,7 @@ class BlogController extends Controller
                 $imageName = uniqid() . '_' . $image->getClientOriginalName();
                 $imagePath = $image->storeAs('blog_images', $imageName, 'public');
             }
+
 
             Blog::create([
                 'title' => $data['title'],
@@ -119,6 +120,22 @@ class BlogController extends Controller
             return to_route('blog')->with('message', 'Blog deleted successfully');
         } catch (Exception $e) {
             return to_route('blog')->with('message', 'Blog not deleted successfully');
+        }
+    }
+
+    public function changeStaus($slug)
+    {
+        try {
+            $blog = Blog::where('slug', $slug)->first();
+            if ($blog->status == 'draft') {
+                $blog->status = 'published';
+            } else {
+                $blog->status = 'draft';
+            }
+            $blog->save();
+            return to_route('blog')->with('message', 'Blog status changed successfully');
+        } catch (Exception $e) {
+            return to_route('blog')->with('message', 'Blog status not changed successfully');
         }
     }
 }

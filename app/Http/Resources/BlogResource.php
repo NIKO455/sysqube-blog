@@ -21,7 +21,9 @@ class BlogResource extends JsonResource
             "status" => $this->status,
             "image" => '/storage/'.$this->image,
             "description" => $this->description,
-            "category" => $this->category->name
+            "category" => $this->category->name,
+            "author" => $this->user->name,
+            "published" => $this->created_at
         ];
     }
 }

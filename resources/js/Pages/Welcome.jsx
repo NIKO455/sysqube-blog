@@ -1,6 +1,6 @@
 import {Link, Head} from '@inertiajs/react';
 
-export default function Welcome({auth, laravelVersion, phpVersion}) {
+export default function Welcome({auth, laravelVersion, phpVersion, blogs}) {
     const handleImageError = () => {
         document.getElementById('screenshot-container')?.classList.add('!hidden');
         document.getElementById('docs-card')?.classList.add('!row-span-1');
@@ -64,68 +64,38 @@ export default function Welcome({auth, laravelVersion, phpVersion}) {
 
                         <main className="mt-6">
                             <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+                                {
+                                    blogs.data.map((blog) => (
+                                        <a href="#"
+                                           className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                            <img
+                                                className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+                                                src={blog.image} alt="blog-image"/>
+                                            <div className="flex flex-col justify-between p-4 leading-normal">
+                                                <div>
+                                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
+                                                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                                        {blog.description}
+                                                    </p>
+                                                </div>
+                                                <div className="flex justify-between items-center">
+                                                    <p className='text-sm'>
+                                                        Author: {blog.author}
+                                                    </p>
+                                                    <p className='text-sm'>
+                                                        Published: {blog.published}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    ))
+                                }
 
-
-                                <a href="#"
-                                   className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    <img
-                                        className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                                        src="https://flowbite.com/docs/images/blog/image-4.jpg" alt=""/>
-                                    <div className="flex flex-col justify-between p-4 leading-normal">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                                            technology acquisitions 2021</h5>
-                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the
-                                            biggest enterprise technology acquisitions of 2021 so far, in reverse
-                                            chronological order.</p>
-                                    </div>
-                                </a>
-
-                                <a href="#"
-                                   className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    <img
-                                        className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                                        src="https://flowbite.com/docs/images/blog/image-4.jpg" alt=""/>
-                                    <div className="flex flex-col justify-between p-4 leading-normal">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                                            technology acquisitions 2021</h5>
-                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the
-                                            biggest enterprise technology acquisitions of 2021 so far, in reverse
-                                            chronological order.</p>
-                                    </div>
-                                </a>
-
-                                <a href="#"
-                                   className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    <img
-                                        className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                                        src="https://flowbite.com/docs/images/blog/image-4.jpg" alt=""/>
-                                    <div className="flex flex-col justify-between p-4 leading-normal">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                                            technology acquisitions 2021</h5>
-                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the
-                                            biggest enterprise technology acquisitions of 2021 so far, in reverse
-                                            chronological order.</p>
-                                    </div>
-                                </a>
-
-                                <a href="#"
-                                   className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    <img
-                                        className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                                        src="https://flowbite.com/docs/images/blog/image-4.jpg" alt=""/>
-                                    <div className="flex flex-col justify-between p-4 leading-normal">
-                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
-                                            technology acquisitions 2021</h5>
-                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the
-                                            biggest enterprise technology acquisitions of 2021 so far, in reverse
-                                            chronological order.</p>
-                                    </div>
-                                </a>
                             </div>
                         </main>
 
                         <footer className="py-16 text-center text-sm text-black dark:text-white/70">
-                            Laravel v{laravelVersion} (PHP v{phpVersion})
+                            Created By: Bhupendra Kathayat
                         </footer>
                     </div>
                 </div>
