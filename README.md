@@ -22,6 +22,10 @@ managing blog posts related to technology.
         - Description
         - Status (Published or Draft)
         - Blog Image upload
+- **Password:**
+    - Name: Admin
+    - Email: admin@gmail.com
+    - Password: admin
 
 ## Installation
 
@@ -54,8 +58,7 @@ composer install
 npm install
 ```
 
-
-# Edit .env,  set your database connection details and other configuration
+# Edit .env, set your database connection details and other configuration
 
 ```bash
 cp .env.example .env
@@ -72,7 +75,6 @@ php artisan migrate --seed
 ```bash
 php artisan storage:link
 ```
-
 
 ### Running the application
 
