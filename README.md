@@ -23,9 +23,14 @@ managing blog posts related to technology.
         - Status (Published or Draft)
         - Blog Image upload
 - **Login Credentials:**
-    - Name: Admin
-    - Email: admin@gmail.com
-    - Password: admin
+    - 1st User
+        - Name: Admin
+        - Email: admin@gmail.com
+        - Password: admin
+    - 2nd User (Recommended)
+        - Name: Test User
+        - Email: user@gmail.com
+        - Password: user
 
 ## Installation
 

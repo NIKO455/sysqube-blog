@@ -18,6 +18,7 @@ export default function Index({auth, blogs}) {
     }
     pages.sort((a, b) => a - b);
 
+
     console.log(blogs.links)
 
     const {post, get} = useForm({});
@@ -89,8 +90,8 @@ export default function Index({auth, blogs}) {
                                                     className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                                     {(currentPage - 1) * 10 + index + 1}
                                                 </th>
-                                                <td className="px-6 py-4">
-                                                    {blog.title}
+                                                <td className="px-6 py-4 ">
+                                                    <a href={`/blog/show/${blog.slug}`} target={'_blank'} className="front-end-title">{blog.title}</a>
                                                 </td>
                                                 <td className="px-6 py-4 back-end-description">
                                                     {blog.introDescription}
@@ -133,6 +134,7 @@ export default function Index({auth, blogs}) {
                                     </tbody>
                                 </table>
                             </div>
+
                             <div className='mt-5 flex items-center justify-center'>
                                 <div>
                                     {

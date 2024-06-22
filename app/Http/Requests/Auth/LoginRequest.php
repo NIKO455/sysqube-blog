@@ -73,9 +73,12 @@ class LoginRequest extends FormRequest
 
         $user = User::where('email', $this->email)->first();
 
-        $user->update([
-            'failed_login' => true
-        ]);
+
+        if($user) {
+            $user->update([
+                'failed_login' => true
+            ]);
+        }
 
         throw ValidationException::withMessages([
             'email' => trans('auth.throttle', [

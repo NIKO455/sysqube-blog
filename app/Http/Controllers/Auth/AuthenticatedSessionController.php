@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
-        if ($user->failed_login === 1) {
+        if ($user && $user->failed_login === 1) {
             return Inertia::render('Errors/UserBlockedPage');
         }
 
