@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index(): \Inertia\Response
     {
-        $blogs = BlogResource::collection(Blog::where('status', 'published')->with('category')->with('user')->orderBy('created_at', 'desc')->get());
+        $blogs = BlogResource::collection(Blog::where('status', 'published')->with('user')->orderBy('created_at', 'desc')->get());
 
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),

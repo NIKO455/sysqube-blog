@@ -25,8 +25,6 @@ class StoreBlogRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string'],
             'image' => ['nullable', 'image'],
-            'description' => ['required'],
-            'category_id' => ['required', 'exists:App\Models\Category,id'],
         ];
     }
 }

@@ -1,19 +1,25 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link, router, useForm, usePage} from '@inertiajs/react';
-import {useEffect} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import TextInput from "@/Components/TextInput.jsx";
 import InputLabel from "@/Components/InputLabel.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
 import InputError from "@/Components/InputError.jsx";
+import JoditEditor from "jodit-react";
 
 
-export default function Create({auth, blog, categories}) {
+export default function Create({auth, blog}) {
+
+    const editor = useRef(null);
+    const [content, setContent] = useState(blog.description)
+    const config = {
+        placeholder: "What's on your mind...",
+    }
 
     const {data, setData, processing, progress} = useForm({
         title: blog.title,
         slug: blog.slug,
         description: blog.description,
-        category_id: blog.category_id,
     });
 
     const {errors} = usePage().props
@@ -29,6 +35,7 @@ export default function Create({auth, blog, categories}) {
 
     const submit = (e) => {
         e.preventDefault();
+        data.description = content
         router.post('/blog/edit/' + blog.slug, data);
     };
 
@@ -83,30 +90,6 @@ export default function Create({auth, blog, categories}) {
                                                     <InputError message={errors.slug} className="mt-2"/>
                                                 </div>
                                             </div>
-
-                                            <div className="col-span-6">
-                                                <InputLabel htmlFor="category" value="Category"/>
-                                                <div className="mt-2">
-                                                    <div
-                                                        className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                                                        <select
-                                                            onChange={(e) => setData('category_id', e.target.value)}
-                                                            id="countries"
-                                                            className="block w-full border-gray-300 rounded-md bg-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                        >
-                                                            {categories &&
-                                                                categories.map((category) => (
-                                                                    <option key={category.id} value={category.id} selected={category.id === blog.category_id}>
-                                                                        {category.name}
-                                                                    </option>
-                                                                ))}
-                                                        </select>
-                                                    </div>
-                                                    <InputError message={errors.category_id} className="mt-2"/>
-                                                </div>
-                                            </div>
-
-
                                             <div className="col-span-full">
                                                 <InputLabel htmlFor="image" value="Image"/>
                                                 <div className="mt-2">
@@ -140,17 +123,22 @@ export default function Create({auth, blog, categories}) {
 
 
                                             <div className="col-span-full">
-                                                <InputLabel htmlFor="description" value="Description"/>
-                                                <div className="mt-2">
-                                                    <textarea id="description" name="description" rows="5"
-                                                              value={data.description}
-                                                              onChange={(e) => setData('description', e.target.value)}
-                                                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                                <div className="flex items-center gap-2">
+                                                    <InputLabel htmlFor="description" value="Description"/>
+                                                    <span className="text-sm leading-6 text-gray-600">(Write about the blog)</span>
                                                 </div>
-                                                <p className="mt-3 text-sm leading-6 text-gray-600">Write about the
-                                                    blog</p>
+                                                <div className="mt-2">
+                                                    <JoditEditor
+                                                        ref={editor}
+                                                        value={content}
+                                                        tabIndex={1}
+                                                        config={config}
+                                                        onBlur={newContent => setContent(newContent)}
+                                                        onChange={newContent => {
+                                                        }}
+                                                    />
+                                                </div>
                                                 <InputError message={errors.description} className="mt-2"/>
-
                                             </div>
                                         </div>
                                     </div>
@@ -158,9 +146,9 @@ export default function Create({auth, blog, categories}) {
                                 </div>
 
                                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                                    <a href='/blog' type="button"
+                                    <Link href='/blog' type="button"
                                        className="text-sm font-semibold leading-6 text-gray-900">Cancel
-                                    </a>
+                                    </Link>
                                     <PrimaryButton className="ms-4" disabled={processing}>
                                         Update
                                     </PrimaryButton>

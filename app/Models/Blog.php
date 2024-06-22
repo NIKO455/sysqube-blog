@@ -15,13 +15,8 @@ class Blog extends Model
         'image',
         'user_id',
         'status',
-        'category_id',
     ];
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

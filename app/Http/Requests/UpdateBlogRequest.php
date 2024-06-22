@@ -25,8 +25,6 @@ class UpdateBlogRequest extends FormRequest
             'title' => ['nullable', 'string', 'max:255'],
             'slug' => ['nullable', 'string'],
             'image' => ['nullable', 'image'],
-            'description' => ['nullable'],
-            'category_id' => ['nullable', 'exists:App\Models\Category,id'],
         ];
     }
 }

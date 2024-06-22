@@ -72,9 +72,6 @@ export default function Index({auth, blogs}) {
                                             Image
                                         </th>
                                         <th scope="col" className="px-6 py-3">
-                                            Category
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
                                             Description
                                         </th>
                                         <th scope="col" className="px-6 py-3">
@@ -100,9 +97,6 @@ export default function Index({auth, blogs}) {
                                                 <td className="px-6 py-4  h-48 w-48 ">
                                                     <img src={blog.image} alt="no-image"
                                                          className='h-28 w-28 rounded object-cover'/>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {blog.category}
                                                 </td>
                                                 <td className="px-6 py-4 back-end-description">
                                                     {blog.description}

@@ -6,7 +6,6 @@ use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
-use App\Models\Category;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -19,7 +18,7 @@ class BlogController extends Controller
      */
     public function index(): \Inertia\Response
     {
-        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('category')->with('user')->latest()->paginate(10));
+        $blogs = BlogResource::collection(Blog::where('user_id', auth()->user()->id)->with('user')->latest()->paginate(10));
         return Inertia::render('Blog/Index', compact('blogs'));
     }
 
@@ -28,8 +27,7 @@ class BlogController extends Controller
      */
     public function create(): \Inertia\Response
     {
-        $categories = Category::all();
-        return Inertia::render('Blog/Create', compact('categories'));
+        return Inertia::render('Blog/Create');
     }
 
     /**
@@ -56,7 +54,6 @@ class BlogController extends Controller
                 'image' => $imagePath,
                 'user_id' => auth()->user()->id,
                 'status' => 'draft',
-                'category_id' => $data['category_id'],
             ]);
 
             return redirect()->route('blog')->with('message', 'Blog created successfully!');
@@ -88,9 +85,10 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog)
+    public function show($slug): \Inertia\Response
     {
-        //
+        $blog = new BlogResource(Blog::where('slug', $slug)->with('user')->first());
+        return Inertia::render('Blog/Show', compact('blog'));
     }
 
     /**
@@ -100,8 +98,7 @@ class BlogController extends Controller
     {
         $blog = Blog::where('slug', $slug)->first();
         $blog->image = '/storage/' . $blog->image;
-        $categories = Category::all();
-        return Inertia::render('Blog/Edit', compact('blog', 'categories'));
+        return Inertia::render('Blog/Edit', compact('blog'));
     }
 
     /**
@@ -133,7 +130,6 @@ class BlogController extends Controller
                 'slug' => $slug,
                 'description' => $data['description'],
                 'image' => $imagePath,
-                'category_id' => $data['category_id'],
             ]);
 
             return redirect()->route('blog')->with('message', 'Blog updated successfully!');

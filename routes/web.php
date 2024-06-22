@@ -19,6 +19,7 @@ Route::post('/blog/create', [BlogController::class, 'store'])->middleware(['auth
 Route::get('/blog/edit/{slug}', [BlogController::class, 'edit'])->middleware(['auth', 'verified'])->name('blog.edit');
 Route::post('/blog/edit/{slug}', [BlogController::class, 'update'])->middleware(['auth', 'verified'])->name('blog.update');
 Route::post('/blog/delete/{slug}', [BlogController::class, 'destroy'])->middleware(['auth', 'verified'])->name('blog.delete');
+Route::get('/blog/show/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 
 Route::post('/blog/change-status/{slug}', [BlogController::class, 'changeStatus'])->middleware(['auth', 'verified'])->name('blog.change-status');
