@@ -19,9 +19,9 @@ class BlogResource extends JsonResource
             "slug" => $this->slug,
             "title" => $this->title,
             "status" => $this->status,
-            "image" => '/storage/'.$this->image,
             "description" => $this->description,
             "author" => $this->user->name,
+            'introDescription' => $this->introDescription,
             "published" => $this->created_at->diffForHumans(),
         ];
     }

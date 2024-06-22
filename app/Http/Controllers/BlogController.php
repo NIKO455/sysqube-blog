@@ -39,26 +39,20 @@ class BlogController extends Controller
             $data = $request->validated();
             $slug = $this->generateUniqueSlug($data['slug']);
 
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = uniqid() . '_' . $image->getClientOriginalName();
-                $imagePath = $image->storeAs('blog_images', $imageName, 'public');
-            }
-
 
             Blog::create([
                 'title' => $data['title'],
                 'slug' => $slug,
                 'description' => $data['description'],
-                'image' => $imagePath,
                 'user_id' => auth()->user()->id,
                 'status' => 'draft',
+                'introDescription' => $data['introDescription'],
             ]);
 
             return redirect()->route('blog')->with('message', 'Blog created successfully!');
 
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('blog')->with('message', 'Blog failed to create!');
         }
     }
@@ -97,7 +91,6 @@ class BlogController extends Controller
     public function edit($slug): \Inertia\Response
     {
         $blog = Blog::where('slug', $slug)->first();
-        $blog->image = '/storage/' . $blog->image;
         return Inertia::render('Blog/Edit', compact('blog'));
     }
 
@@ -114,22 +107,12 @@ class BlogController extends Controller
                 $data['slug'] = $this->generateUniqueSlug($data['slug']);
             }
 
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                    Storage::disk('public')->delete($blog->image);
-                }
-
-                $image = $request->file('image');
-                $imageName = uniqid() . '_' . $image->getClientOriginalName();
-                $imagePath = $image->storeAs('blog_images', $imageName, 'public');
-            }
 
             $blog->update([
                 'title' => $data['title'],
                 'slug' => $slug,
                 'description' => $data['description'],
-                'image' => $imagePath,
+                'introDescription' => $data['introDescription'],
             ]);
 
             return redirect()->route('blog')->with('message', 'Blog updated successfully!');
@@ -147,9 +130,6 @@ class BlogController extends Controller
     {
         try {
             $blog = Blog::where('slug', $slug)->first();
-            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                Storage::disk('public')->delete($blog->image);
-            }
             $blog->delete();
             return to_route('blog')->with('message', 'Blog deleted successfully!');
         } catch (Exception $e) {
@@ -169,7 +149,7 @@ class BlogController extends Controller
             $blog->save();
             return to_route('blog')->with('message', 'Blog status changed successfully!');
         } catch (Exception $e) {
-            return to_route('blog')->with('message', 'Blog status not changed successfully!');
+            return to_route('blog')->with('message', 'Blog status failed to change!');
         }
     }
 }

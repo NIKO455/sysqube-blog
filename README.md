@@ -72,10 +72,6 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-```bash
-php artisan storage:link
-```
-
 ### Running the application
 
 #### Backend (Laravel)

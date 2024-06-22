@@ -21,6 +21,7 @@ export default function Create({auth}) {
     const {data, setData, processing, progress} = useForm({
         title: '',
         slug: '',
+        introDescription: '',
         description: null,
     });
 
@@ -96,34 +97,20 @@ export default function Create({auth}) {
                                                 </div>
                                             </div>
 
-
-                                            <div className="col-span-full">
-                                                <InputLabel htmlFor="image" value="Image"/>
+                                            <div className="col-span-6">
+                                                <InputLabel htmlFor="introDescription" value="Intro Description"/>
                                                 <div className="mt-2">
-                                                    {data.image ? (
-                                                        <div>
-                                                            <img
-                                                                src={URL.createObjectURL(data.image)}
-                                                                className="w-32 h-32 rounded object-cover"
-                                                                alt="Selected Image"
-                                                            />
-                                                        </div>
-                                                    ) : null}
-                                                    <div className={data.image ? 'col-span-6 mt-2' : 'col-span-full'}>
-                                                        <input
-                                                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                                            id="image"
-                                                            name="image"
-                                                            type="file"
-                                                            onChange={(e) => setData('image', e.target.files[0])}
-                                                        />
-                                                        {progress && (
-                                                            <progress value={progress.percentage} max="100">
-                                                                {progress.percentage}%
-                                                            </progress>
-                                                        )}
-                                                        <InputError message={errors.image} className="mt-2"/>
-                                                    </div>
+                                                    <TextInput
+                                                        id="introDescription"
+                                                        type="text"
+                                                        name="introDescription"
+                                                        value={data.introDescription}
+                                                        className="mt-1 block w-full"
+                                                        autoComplete="introDescription"
+                                                        isFocused={true}
+                                                        onChange={(e) => setData('introDescription', e.target.value)}
+                                                    />
+                                                    <InputError message={errors.introDescription} className="mt-2"/>
                                                 </div>
                                             </div>
 
@@ -139,7 +126,8 @@ export default function Create({auth}) {
                                                         tabIndex={1}
                                                         config={config}
                                                         onBlur={newContent => setContent(newContent)}
-                                                        onChange={newContent => {}}
+                                                        onChange={newContent => {
+                                                        }}
                                                     />
                                                 </div>
                                                 <InputError message={errors.description} className="mt-2"/>

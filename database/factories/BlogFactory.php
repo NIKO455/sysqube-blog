@@ -20,7 +20,7 @@ class BlogFactory extends Factory
             'title' => fake()->sentence(),
             'slug' => fake()->slug(),
             'description' => fake()->text(),
-            'image' => 'blog_images/667562d5e1280_shampoo.jpg',
+            'introDescription' => fake()->sentence(),
             'user_id' => 1,
             'status' => 'published',
         ];

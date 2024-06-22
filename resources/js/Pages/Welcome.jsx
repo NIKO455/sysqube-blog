@@ -1,5 +1,6 @@
 import {Link, Head} from '@inertiajs/react';
 
+
 export default function Welcome({auth, laravelVersion, phpVersion, blogs}) {
     const handleImageError = () => {
         document.getElementById('screenshot-container')?.classList.add('!hidden');
@@ -84,7 +85,9 @@ export default function Welcome({auth, laravelVersion, phpVersion, blogs}) {
                                             <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                                 <Link href={`/blog/show/${blog.slug}`} className="front-end-title">{blog.title}</Link>
                                             </h2>
-                                            <p className="mb-5 font-light text-gray-500 dark:text-gray-400 front-end-description">{blog.description}</p>
+                                            <p className="mb-5 font-light text-gray-500 dark:text-gray-400 front-end-description">
+                                                {blog.introDescription}
+                                            </p>
                                             <div className="flex justify-between items-center">
                                                 <div className="flex items-center space-x-4">
                                                     <img className="w-7 h-7 rounded-full"

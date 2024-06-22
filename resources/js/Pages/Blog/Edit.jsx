@@ -20,6 +20,7 @@ export default function Create({auth, blog}) {
         title: blog.title,
         slug: blog.slug,
         description: blog.description,
+        introDescription: blog.introDescription,
     });
 
     const {errors} = usePage().props
@@ -90,34 +91,21 @@ export default function Create({auth, blog}) {
                                                     <InputError message={errors.slug} className="mt-2"/>
                                                 </div>
                                             </div>
-                                            <div className="col-span-full">
-                                                <InputLabel htmlFor="image" value="Image"/>
-                                                <div className="mt-2">
-                                                    {data.image || blog.image ? (
-                                                        <div>
-                                                            <img
-                                                                src={data.image ? URL.createObjectURL(data.image) : blog.image}
-                                                                className="w-32 h-32 rounded object-cover"
-                                                                alt="Selected Image"
-                                                            />
-                                                        </div>
-                                                    ) : null}
 
-                                                    <div className={data.image ? 'col-span-6' : 'col-span-full'}>
-                                                        <input
-                                                            className="block w-full text-sm mt-2 text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                                            id="image"
-                                                            name="image"
-                                                            type="file"
-                                                            onChange={(e) => setData('image', e.target.files[0])}
-                                                        />
-                                                        {progress && (
-                                                            <progress value={progress.percentage} max="100">
-                                                                {progress.percentage}%
-                                                            </progress>
-                                                        )}
-                                                        <InputError message={errors.image} className="mt-2"/>
-                                                    </div>
+                                            <div className="col-span-6">
+                                                <InputLabel htmlFor="introDescription" value="Intro Description"/>
+                                                <div className="mt-2">
+                                                    <TextInput
+                                                        id="introDescription"
+                                                        type="text"
+                                                        name="introDescription"
+                                                        value={data.introDescription}
+                                                        className="mt-1 block w-full"
+                                                        autoComplete="introDescription"
+                                                        isFocused={true}
+                                                        onChange={(e) => setData('introDescription', e.target.value)}
+                                                    />
+                                                    <InputError message={errors.introDescription} className="mt-2"/>
                                                 </div>
                                             </div>
 
@@ -147,7 +135,7 @@ export default function Create({auth, blog}) {
 
                                 <div className="mt-6 flex items-center justify-end gap-x-6">
                                     <Link href='/blog' type="button"
-                                       className="text-sm font-semibold leading-6 text-gray-900">Cancel
+                                          className="text-sm font-semibold leading-6 text-gray-900">Cancel
                                     </Link>
                                     <PrimaryButton className="ms-4" disabled={processing}>
                                         Update

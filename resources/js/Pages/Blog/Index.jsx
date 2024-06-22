@@ -1,11 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link, useForm} from '@inertiajs/react';
 
+
+
 export default function Index({auth, blogs}) {
 
     const currentPage = parseInt(new URLSearchParams(window.location.search).get('page') || '1');
 
-    // Extract page numbers from blogs.links dynamically
     const pages = [];
     for (let key in blogs.links) {
         if (blogs.links[key] && blogs.links[key].includes('page=')) {
@@ -15,7 +16,7 @@ export default function Index({auth, blogs}) {
             }
         }
     }
-    pages.sort((a, b) => a - b); // Sort pages in ascending order
+    pages.sort((a, b) => a - b);
 
     console.log(blogs.links)
 
@@ -69,10 +70,7 @@ export default function Index({auth, blogs}) {
                                             Title
                                         </th>
                                         <th scope="col" className="px-6 py-3">
-                                            Image
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Description
+                                            Intro Description
                                         </th>
                                         <th scope="col" className="px-6 py-3">
                                             Status
@@ -91,15 +89,11 @@ export default function Index({auth, blogs}) {
                                                     className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                                     {(currentPage - 1) * 10 + index + 1}
                                                 </th>
-                                                <td className="px-6 py-4 back-end-title box">
+                                                <td className="px-6 py-4">
                                                     {blog.title}
                                                 </td>
-                                                <td className="px-6 py-4  h-48 w-48 ">
-                                                    <img src={blog.image} alt="no-image"
-                                                         className='h-28 w-28 rounded object-cover'/>
-                                                </td>
                                                 <td className="px-6 py-4 back-end-description">
-                                                    {blog.description}
+                                                    {blog.introDescription}
                                                 </td>
                                                 <td className="px-6 py-4 capitalize">
                                                     {

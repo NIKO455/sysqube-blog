@@ -24,7 +24,8 @@ class StoreBlogRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string'],
-            'image' => ['nullable', 'image'],
-        ];
+            'description' => ['required', 'string'],
+            'introDescription' => ['nullable', 'string'],
+            ];
     }
 }

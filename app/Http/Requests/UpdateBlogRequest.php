@@ -24,7 +24,8 @@ class UpdateBlogRequest extends FormRequest
         return [
             'title' => ['nullable', 'string', 'max:255'],
             'slug' => ['nullable', 'string'],
-            'image' => ['nullable', 'image'],
+            'description' => ['nullable', 'string'],
+            'introDescription' => ['nullable', 'string'],
         ];
     }
 }
