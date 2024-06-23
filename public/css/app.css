@@ -5,18 +5,9 @@
     overflow: hidden;
 }
 
-.back-end-description{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    width: 400px;
-}
-
 .back-end-title{
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
     overflow: hidden;
     width: 150px;
 }

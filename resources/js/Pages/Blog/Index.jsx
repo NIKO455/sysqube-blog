@@ -19,21 +19,37 @@ export default function Index({auth, blogs}) {
     pages.sort((a, b) => a - b);
 
 
-    console.log(blogs.links)
-
     const {post, get} = useForm({});
 
+    /**
+     * Delete a blog post.
+     *
+     * @param {string} slug - The slug of the blog post to be deleted.
+     * @return {void}
+     */
     function deleteBlog(slug) {
         if (window.confirm(`Are you sure you want to delete the blog post ?`)) {
             post(`/blog/delete/${slug}`);
         }
     }
 
+    /**
+     * Edit a blog post.
+     *
+     * @param {string} slug - The slug of the blog post to be edited.
+     * @return {void}
+     */
     function editBlog(slug) {
         get(`/blog/edit/${slug}`);
     }
 
-    function changeStaus(slug) {
+    /**
+     * Change the status of a blog post.
+     *
+     * @param {string} slug - The slug of the blog post.
+     * @return {void}
+     */
+    function changeStatus(slug) {
         post(`/blog/change-status/${slug}`);
     }
 
@@ -99,9 +115,9 @@ export default function Index({auth, blogs}) {
                                                 <td className="px-6 py-4 capitalize">
                                                     {
                                                         blog.status === 'draft' ?
-                                                            <span onClick={() => changeStaus(blog.slug)}
+                                                            <span onClick={() => changeStatus(blog.slug)}
                                                                   className='bg-red-400 py-1 px-2 rounded cursor-pointer text-red-600'>Draft</span> :
-                                                            <span onClick={() => changeStaus(blog.slug)}
+                                                            <span onClick={() => changeStatus(blog.slug)}
                                                                   className='bg-green-400 py-1 px-2 rounded cursor-pointer  text-green-600'>Published</span>
                                                     }
                                                 </td>
@@ -138,6 +154,7 @@ export default function Index({auth, blogs}) {
                             <div className='mt-5 flex items-center justify-center'>
                                 <div>
                                     {
+                                        blogs.links &&
                                         blogs.links  ?
                                             <nav aria-label="Page navigation example">
                                                 <ul className="inline-flex -space-x-px text-sm">
